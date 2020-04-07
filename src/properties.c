@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "http_server.h"
+#include "string_util.h"
 #include "properties.h"
 
 /** Definition of an entry in a property list */
@@ -169,12 +170,7 @@ int loadProperties(const char *propFile, Properties *props) {
 			*valp++ = '\0';
 
 			// trim newline characters
-			char *p = strstr(valp, CRLF);
-			if (p != NULL) {
-				*p = 0;
-			} else	if ((p = strstr(valp, "\n")) != NULL) {
-				*p = 0;
-			}
+			trim_newline(valp);
 
 			// make property entry
 			putProperty(props, buf, valp);

@@ -11,6 +11,7 @@
 #include <string.h>
 #include "properties.h"
 #include "file_util.h"
+#include "string_util.h"
 #include "http_server.h"
 
 
@@ -25,19 +26,14 @@ void readRequestHeaders(FILE *istream, Properties *requestHeaders) {
 
 	while (fgets(buf, MAXBUF, istream) != NULL) {
 		// trim newline characters
-		char *p = strstr(buf, CRLF);
-		if (p != NULL) {
-			*p = '\0';
-		} else	if ((p = strstr(buf, "\n")) != NULL) {
-			*p = '\0';
-		}
+		trim_newline(buf);
 
 		// empty line marks send of headers
 		if (*buf == '\0') {
 			break;
 		}
 
-		p = strchr(buf, ':'); // find name/value delimiter
+		char *p = strchr(buf, ':'); // find name/value delimiter
 		if (p != NULL) {
 			for (*p++ = '\0'; *p == ' '; p++) {} // skip over leading value whitespace
 			if (!putProperty(requestHeaders, buf, p)) {  // save request property

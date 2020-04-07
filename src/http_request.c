@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include "http_methods.h"
 #include "http_util.h"
+#include "string_util.h"
 #include "time_util.h"
 #include "http_server.h"
 
@@ -41,11 +42,8 @@ void process_request(int sock_fd) {
 	if (fgets(request, MAXBUF, stream) == NULL) {
 		return;
 	}
-	// eliminate newline
-	char *p = strstr(request, CRLF);
-	if (p != NULL) {
-		*p = '\0';
-	}
+	// eliminate newline from request
+	trim_newline(request);
 
 	// initialize request headers
 	Properties *responseHeaders = newProperties();
@@ -75,7 +73,7 @@ void process_request(int sock_fd) {
 	}
 
 	// save query parameters as key "?"
-	p = strpbrk(encUri,"?&");
+	char *p = strpbrk(encUri,"?&");
 	if (p != NULL) {
 		putProperty(requestHeaders, "?", p+1);
 		*p = '\0';
