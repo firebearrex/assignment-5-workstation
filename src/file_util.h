@@ -59,6 +59,25 @@ int copyFileStreamBytes(FILE *istream, FILE *ostream, int nbytes);
 char *getPath(const char *filePath, char *pathOfFile);
 
 /**
+ * Returns name component of the file.
+ *
+ * @param filePath the path and file
+ * @param name return buffer (must be large enough)
+ * @return pointer to name or NULL if no path
+ */
+char *getName(const char *filePath, char *name);
+
+/**
+ * Returns extension of the file path without the '.'.
+ * If no extension, returns NULL.
+ *
+ * @param filePath the path and file
+ * @param extension return buffer (must be large enough)
+ * @return pointer to extension or NULL if no path
+ */
+char *getExtension(const char *filePath, char *extension);
+
+/**
  * Make a file path by combining a path and a file name.
  * If the file name begins with '/', return the name as an
  * absolute. Otherwise, concatenate the path and name,

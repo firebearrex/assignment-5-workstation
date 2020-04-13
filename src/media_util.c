@@ -15,6 +15,7 @@
 #include <ctype.h>
 #include "string_util.h"
 #include "http_server.h"
+#include "file_util.h"
 
 /** default media type */
 static const char *DEFAULT_MEDIA_TYPE = "application/octet-stream";
@@ -34,16 +35,15 @@ char *getMediaType(const char *filename, char *mediaType)
 		return mediaType;
 	}
 
-	// find file extension
-    char *p = strrchr(filename, '.');
-    if (p == NULL) { // default if no extension
+	// get file extension
+    char ext[MAXBUF];
+    if (getExtension(filename, ext) == NULL) {
+    	// default if no extension
     	strcpy(mediaType, DEFAULT_MEDIA_TYPE);
     	return mediaType;
     }
 
     // lower-case extension
-    char ext[MAXBUF];
-    strcpy(ext, ++p);
     strlower(ext, ext);
 
     const char *mtstr;
