@@ -49,7 +49,7 @@ int fileStat(FILE *stream, struct stat *buf) {
  * @param return 0 if successful
  */
 int copyFileStreamBytes(FILE *istream, FILE *ostream, int nbytes) {
-	char *buf[MAXBUF];
+	char buf[MAXBUF];
     while ((nbytes > 0) && !feof(istream)) {
     	int ntoread = (nbytes < MAXBUF) ? nbytes : MAXBUF;
         size_t nread = fread(buf, sizeof(char), ntoread, istream);
