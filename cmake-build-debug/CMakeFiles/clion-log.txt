@@ -1,0 +1,4 @@
+"/Users/rex/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/201.6668.126/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/cmake-build-debug

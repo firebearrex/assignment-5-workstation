@@ -1,0 +1,3 @@
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/cmake-build-debug/CMakeFiles/assignment_5_workstation.dir
