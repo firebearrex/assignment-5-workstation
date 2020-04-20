@@ -123,6 +123,33 @@ assignment_5_workstation/fast:
 	$(MAKE) -f CMakeFiles/assignment_5_workstation.dir/build.make CMakeFiles/assignment_5_workstation.dir/build
 .PHONY : assignment_5_workstation/fast
 
+assignment-5-threadpool-workstation/src/thpool.o: assignment-5-threadpool-workstation/src/thpool.c.o
+
+.PHONY : assignment-5-threadpool-workstation/src/thpool.o
+
+# target to build an object file
+assignment-5-threadpool-workstation/src/thpool.c.o:
+	$(MAKE) -f CMakeFiles/assignment_5_workstation.dir/build.make CMakeFiles/assignment_5_workstation.dir/assignment-5-threadpool-workstation/src/thpool.c.o
+.PHONY : assignment-5-threadpool-workstation/src/thpool.c.o
+
+assignment-5-threadpool-workstation/src/thpool.i: assignment-5-threadpool-workstation/src/thpool.c.i
+
+.PHONY : assignment-5-threadpool-workstation/src/thpool.i
+
+# target to preprocess a source file
+assignment-5-threadpool-workstation/src/thpool.c.i:
+	$(MAKE) -f CMakeFiles/assignment_5_workstation.dir/build.make CMakeFiles/assignment_5_workstation.dir/assignment-5-threadpool-workstation/src/thpool.c.i
+.PHONY : assignment-5-threadpool-workstation/src/thpool.c.i
+
+assignment-5-threadpool-workstation/src/thpool.s: assignment-5-threadpool-workstation/src/thpool.c.s
+
+.PHONY : assignment-5-threadpool-workstation/src/thpool.s
+
+# target to generate assembly for a file
+assignment-5-threadpool-workstation/src/thpool.c.s:
+	$(MAKE) -f CMakeFiles/assignment_5_workstation.dir/build.make CMakeFiles/assignment_5_workstation.dir/assignment-5-threadpool-workstation/src/thpool.c.s
+.PHONY : assignment-5-threadpool-workstation/src/thpool.c.s
+
 src/file_util.o: src/file_util.c.o
 
 .PHONY : src/file_util.o
@@ -402,6 +429,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... assignment_5_workstation"
+	@echo "... assignment-5-threadpool-workstation/src/thpool.o"
+	@echo "... assignment-5-threadpool-workstation/src/thpool.i"
+	@echo "... assignment-5-threadpool-workstation/src/thpool.s"
 	@echo "... src/file_util.o"
 	@echo "... src/file_util.i"
 	@echo "... src/file_util.s"

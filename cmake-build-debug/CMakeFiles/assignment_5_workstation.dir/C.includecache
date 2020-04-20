@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/assignment-5-threadpool-workstation/src/thpool.c
+unistd.h
+-
+signal.h
+-
+stdio.h
+-
+stdlib.h
+-
+pthread.h
+-
+errno.h
+-
+time.h
+-
+sys/prctl.h
+-
+thpool.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/assignment-5-threadpool-workstation/src/thpool.h
+
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/assignment-5-threadpool-workstation/src/thpool.h
+

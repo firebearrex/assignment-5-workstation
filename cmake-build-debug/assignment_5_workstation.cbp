@@ -87,6 +87,12 @@
 		<Unit filename="/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/README.md">
 			<Option target="assignment_5_workstation"/>
 		</Unit>
+		<Unit filename="/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/assignment-5-threadpool-workstation/src/thpool.c">
+			<Option target="assignment_5_workstation"/>
+		</Unit>
+		<Unit filename="/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/assignment-5-threadpool-workstation/src/thpool.h">
+			<Option target="assignment_5_workstation"/>
+		</Unit>
 		<Unit filename="/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/file_util.c">
 			<Option target="assignment_5_workstation"/>
 		</Unit>

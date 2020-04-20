@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/assignment_5_workstation.dir/assignment-5-threadpool-workstation/src/thpool.c.o"
   "CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o"
   "CMakeFiles/assignment_5_workstation.dir/src/http_methods.c.o"
   "CMakeFiles/assignment_5_workstation.dir/src/http_request.c.o"

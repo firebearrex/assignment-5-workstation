@@ -28,7 +28,7 @@ add_executable(assignment_5_workstation
         src/time_util.c
         src/time_util.h
         README.md
-#        thpool.c
-#        thpool.h
+        assignment-5-threadpool-workstation/src/thpool.c
+        assignment-5-threadpool-workstation/src/thpool.h
 #        example.c
         )
