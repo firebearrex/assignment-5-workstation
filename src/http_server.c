@@ -24,6 +24,7 @@
 #include "http_server.h"
 #include "thpool.h"
 #include "media_util.h"
+#include "file_util.h"
 
 /**
  * The port numbers come from wikipedia and they are registered ports.
@@ -60,6 +61,16 @@ static bool process_config(const char* configFileName) {
 		if (findProperty(httpConfig, 0, "Debug", debugProp) != SIZE_MAX) {
 			server.debug =  (strcasecmp(debugProp, "true") == 0);
 		}
+
+        // server root directory relative to config file path
+        char configFilePath[MAXBUF];
+        if (getPath(configFileName, configFilePath) != NULL) {
+            if (chdir(configFilePath) != 0) { // should not happen
+                perror("configFilePath");
+                status = false;
+                break;
+            }
+        }
 
 		// set server root directory
 		char rootDirProp[MAXBUF];
@@ -142,6 +153,8 @@ int main(int argc, char* argv[argc]) {
 		fprintf(stderr, "HttpServer running on port %d\n", server.server_port);
 	}
 
+    threadpool thpool = thpool_init(4);
+
 	while (true) {
         // accept client connection
 		int socket_fd = accept_peer_connection(listen_sock_fd);
@@ -157,7 +170,8 @@ int main(int argc, char* argv[argc]) {
 		}
 
 		// handle request
-		process_request(socket_fd);
+//		process_request(socket_fd);
+        thpool_add_work(thpool, (void*)process_request, &socket_fd);
     }
 
     // close listener socket
