@@ -75,4 +75,26 @@ char *resolveUri(const char *uri, char *fspath);
  */
 void debugRequest(const char *request, Properties *requestHeaders);
 
+/**
+ * Write initial HTML code in file
+ * @param fname file to write HTML code
+ */
+void startHtmlPage(const char *uri, FILE* fname);
+
+/**
+ * Write file entry to HTML page
+ * @param fname file to write data to
+ * @param name list file name
+ * @param mtime last modification time
+ * @param size file size
+ * @param mode file type
+ */
+void makeHtmlEntry(FILE* fname, const char *name, const char *mtime, off_t size, long mode);
+
+/**
+ * Add end of page HTML text
+ * @param fname file to write data to
+ */
+void endHtmlPage(FILE* fname);
+
 #endif /* HTTP_UTIL_H_ */

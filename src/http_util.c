@@ -8,7 +8,9 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <sys/param.h>
 #include "properties.h"
 #include "file_util.h"
 #include "string_util.h"
@@ -169,3 +171,126 @@ void debugRequest(const char *request, Properties *requestHeaders) {
 	fprintf(stderr, "\n");
 }
 
+/**
+ * Write initial HTML code in file
+ * @param fname file to write HTML code
+ */
+void startHtmlPage(const char *uri, FILE* fname) {
+    char htmlData[MAXBSIZE];
+
+    strcpy(htmlData, "<html>\n<head>\n"
+                      "  <title>index of ");
+    strcat(htmlData, uri);
+    strcat(htmlData, "</title></head>\n"
+                       "<body>\n"
+                       "  <h1>Index of ");
+    strcat(htmlData, uri);
+    strcat(htmlData, "</h1>\n"
+                       "  <table>\n"
+                       "  <tr>\n"
+                       "    <th valign=\"top\"></th>\n"
+                       "    <th>Name</th>\n"
+                       "    <th>Last modified</th>\n"
+                       "    <th>Size</th>\n"
+                       "    <th>File Type</th>\n");
+    strcat(htmlData, "  </tr>\n"
+                       "  <tr>\n"
+                       "    <td colspan=\"5\"><hr></td>\n"
+                       "  </tr>\n\n");
+    fprintf(fname, htmlData);
+}
+
+void tostring(char str[], int num)
+{
+    int i, rem, len = 0, n;
+
+    n = num;
+    while (n != 0)
+    {
+        len++;
+        n /= 10;
+    }
+    for (i = 0; i < len; i++)
+    {
+        rem = num % 10;
+        num = num / 10;
+        str[len - (i + 1)] = rem + '0';
+    }
+    str[len] = '\0';
+}
+
+/**
+ * Write file entry to HTML page
+ * @param fname file to write data to
+ * @param name list file name
+ * @param mtime last modification time
+ * @param size file size
+ * @param mode file type
+ */
+void makeHtmlEntry(FILE* fname, const char *name, const char *mtime, off_t size, long mode) {
+
+    char htmlData[MAXBSIZE];
+    char fileName[MAXBSIZE];
+    char fileLink[MAXBSIZE];
+    char sizeStr[MAXBSIZE];
+    char modeStr[MAXBSIZE];
+
+    tostring(sizeStr, size);
+
+    strcpy(htmlData, "<tr>\n"
+                      "    <td></td>\n"
+                      "    <td><a href=\"");
+
+    if (strcmp(name, "..") == 0) {
+        strcpy(fileName, "Parent Directory");
+        strcpy(fileLink, "../");
+    } else {
+        strcpy(fileName, name);
+        strcpy(fileLink, name);
+
+        if (S_ISDIR(mode)) {
+            strcat(fileLink, "/");
+        }
+    }
+
+    if (S_ISDIR(mode)) {
+        strcpy(modeStr, "Directory");
+    } else if (S_ISLNK(mode)) {
+        strcpy(modeStr, "Link");
+    } else {
+        strcpy(modeStr, "File");
+    }
+
+    strcat(htmlData, fileLink);
+    strcat(htmlData, "\">");
+    strcat(htmlData, fileName);
+    strcat(htmlData, "</a></td>\n"
+                      "    <td align=\"right\">");
+    strcat(htmlData, mtime);
+    strcat(htmlData, "</td>\n"
+                      "    <td align=\"right\">");
+    strcat(htmlData, sizeStr);
+    strcat(htmlData, "</td>\n"
+                      "    <td>");
+    strcat(htmlData, modeStr);
+    strcat(htmlData, "</td>\n"
+                       "    <td></td>\n"
+                       "  </tr>");
+    fprintf(fname, htmlData);
+}
+
+/**
+ * Add end of page HTML text
+ * @param fname file to write data to
+ */
+void endHtmlPage(FILE* fname) {
+    char htmlData[MAXBSIZE];
+
+    strcpy(htmlData, "\n"
+                     "  <tr>\n"
+                     "    <td colspan=\"5\"><hr></td>\n"
+                     "  </tr>\n"
+                     "</body>\n"
+                     "</html>");
+    fprintf(fname, htmlData);
+}

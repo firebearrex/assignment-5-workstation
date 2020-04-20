@@ -12,6 +12,10 @@
 #include <stdbool.h>
 #include "http_server.h"
 #include "file_util.h"
+#include <sys/param.h>
+#include <dirent.h>
+#include <time.h>
+#include <http_util.h>
 
 /**
  * This function creates a temporary stream for this string.
@@ -162,4 +166,88 @@ int mkdirs(const char *path, mode_t mode) {
 		}
 	}
 	return 0;
+}
+
+// buf needs to store 30 characters
+int timespec2str(char *buf, uint len, struct timespec *ts) {
+    int ret;
+    struct tm t;
+
+    tzset();
+    if (localtime_r(&(ts->tv_sec), &t) == NULL)
+        return 1;
+
+    ret = strftime(buf, len, "%F %T", &t);
+    if (ret == 0)
+        return 2;
+    len -= ret - 1;
+
+    //ret = snprintf(&buf[strlen(buf)], len, ".%09ld", ts->tv_nsec);
+    if (ret >= len)
+        return 3;
+
+    return 0;
+}
+
+/**
+ * Generates the directory listing as a temporary file and returns a FILE*
+ *
+ * @param path the path to the directory
+ * @return FILE pointer to the file listing contents of the directory
+ */
+void get_dir_listings(const char *uri, const char *path, const char *filename) {
+    char filePath[MAXPATHLEN];
+    char fileInDir[MAXPATHLEN];
+    char buf[MAXBSIZE];
+    long bufLen;
+    char timeStr[TIME_FMT];
+
+    // Create file filename
+    makeFilePath(path, filename, filePath);
+
+    // open a stream for filePath to write
+    FILE *listDirStream = fopen(filePath, "w");
+
+    startHtmlPage(uri, listDirStream);
+    //fprintf(listDirStream, "Name\tLast modified\tSize\tFile version\n");
+
+    // Collect data
+    DIR *dir;
+    struct stat sb;
+    struct dirent *dirEntry;
+
+    dir = opendir(path);
+
+    if (dir)
+    {
+        while ((dirEntry = readdir(dir)) != NULL)
+        {
+            if ((strcmp(dirEntry->d_name, filename) == 0)
+             || (strcmp(dirEntry->d_name, ".") == 0)){
+                continue;
+            }
+
+            memset(fileInDir, 0, sizeof(fileInDir));
+            memset(timeStr, 0, sizeof(timeStr));
+            memset(buf, 0, sizeof(buf));
+
+            strcpy(fileInDir, path);
+            strcat(fileInDir, "/");
+            strcat(fileInDir, dirEntry->d_name);
+
+            if (stat(fileInDir, &sb) == -1) {
+                fprintf(stderr, "Can't stat %s: %s\n", dirEntry->d_name,
+                        strerror(errno));
+
+                printf("unknown");
+            } else {
+                timespec2str(timeStr, sizeof(timeStr), &sb.st_mtimespec);
+                makeHtmlEntry(listDirStream, dirEntry->d_name, timeStr, sb.st_size, sb.st_mode);
+                //fprintf(listDirStream, "%s\t%s\t%lld\t%d\n", dirEntry->d_name, timeStr, sb.st_size, sb.st_mode);
+            }
+        }
+        endHtmlPage(listDirStream);
+        closedir(dir);
+        fclose(listDirStream);
+    }
 }

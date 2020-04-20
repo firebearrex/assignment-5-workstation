@@ -11,6 +11,7 @@
 #define FILE_UTIL_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/stat.h>
 
 // MacOS uses non-standard name for stat time fields
@@ -19,6 +20,8 @@
 #define st_ctim st_ctimespec
 #define st_atim st_atimespec
 #endif
+
+#define TIME_FMT 16
 
 /**
  * This function creates a temporary stream for this string.
@@ -98,4 +101,13 @@ char *makeFilePath(const char *path, const char *name, char *filepath);
  */
 int mkdirs(const char *path, mode_t mode);
 
+/**
+ * Generates the directory listing as a temporary file and returns a FILE*
+ *
+ * @param path the path to the directory
+ * @return FILE pointer to the file listing contents of the directory
+ */
+void get_dir_listings(const char *uri, const char * path, const char *filename);
+
+int timespec2str(char *buf, unsigned int len, struct timespec *ts);
 #endif /* FILE_UTIL_H_ */

@@ -4,6 +4,7 @@
 CMakeFiles/assignment_5_workstation.dir/assignment-5-threadpool-workstation/src/thpool.c.o: ../assignment-5-threadpool-workstation/src/thpool.c
 CMakeFiles/assignment_5_workstation.dir/assignment-5-threadpool-workstation/src/thpool.c.o: ../assignment-5-threadpool-workstation/src/thpool.h
 
+CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/http_util.h
 CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/file_util.c
 CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/file_util.h
 CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/http_server.h

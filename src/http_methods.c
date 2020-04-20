@@ -102,7 +102,47 @@ static void do_get_or_head(FILE *stream, const char *uri, Properties *requestHea
  * @param headOnly only perform head operation
  */
 void do_get(FILE *stream, const char *uri, Properties *requestHeaders, Properties *responseHeaders) {
-	do_get_or_head(stream, uri, requestHeaders, responseHeaders, true);
+    // get path to URI in file system
+    char filePath[MAXPATHLEN];
+    char newUri[MAXPATHLEN] = "";
+    resolveUri(uri, filePath);
+    long uriLen;
+    int count = 1;
+
+    // ensure file exists
+    struct stat sb;
+    if (stat(filePath, &sb) != 0) {
+        sendErrorResponse(stream, 404, "Not Found", responseHeaders);
+        return;
+    }
+
+    // directory path ends with '/'
+    if (S_ISDIR(sb.st_mode) && strendswith(filePath, "/")) {
+        char listingFile[] = "listDir.html";
+        long lenFile = strlen(listingFile);
+
+        // Generate directory listing
+        // create any intermediate directories
+        char pathOfFile[MAXPATHLEN];
+        if (getPath(filePath, pathOfFile) != NULL) {
+            mkdirs(pathOfFile, 0777);
+        }
+        get_dir_listings(uri, pathOfFile, listingFile);
+
+        // Call do_get() with uri/listings path
+        uriLen = strlen(uri);
+        strncat(newUri, uri, uriLen);
+        strncat(newUri, listingFile, lenFile);
+
+        do_get(stream, newUri, requestHeaders, responseHeaders);
+
+        // Remove uri/listings file
+        resolveUri(newUri, filePath);
+        //unlink(filePath);
+
+    } else {
+        do_get_or_head(stream, uri, requestHeaders, responseHeaders, true);
+    }
 }
 
 /**
@@ -152,9 +192,8 @@ void do_delete(FILE *stream, const char *uri, Properties *requestHeaders, Proper
 		} else {
 			sendErrorResponse(stream, 405, "Method Not Allowed", responseHeaders);
 		}
-	} else {
-		sendErrorResponse(stream, 404, "Not Found", responseHeaders);
 	}
+
 	return;
 }
 
