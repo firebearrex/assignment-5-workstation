@@ -171,8 +171,10 @@ int main(int argc, char* argv[argc]) {
 
 		// handle request
 //		process_request(socket_fd);
-        thpool_add_work(thpool, (void*)process_request, &socket_fd);
+        thpool_add_work(thpool, param_adapter, (void*)(uintptr_t)socket_fd);
     }
+
+    thpool_destroy(thpool);
 
     // close listener socket
     close(listen_sock_fd);

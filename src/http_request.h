@@ -16,5 +16,10 @@
  */
 void process_request(int sock_fd);
 
+/**
+ * Reversing the cast from void* to int.
+ * @param socket_fd - the void pointer casted from int socket_fd
+ */
+void param_adapter(void* socket_fd);
 
 #endif /* HTTP_REQUEST_H_ */
