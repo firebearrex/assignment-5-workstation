@@ -20,6 +20,54 @@
 /** default media type */
 static const char *DEFAULT_MEDIA_TYPE = "application/octet-stream";
 
+/** global Properties instance */
+static Properties *props;
+
+/**
+ * Read the file extensions and media types into global Properties instance
+ *
+ * @param filename the name of the "mime.types" file
+ * @return the number of entries in Properties
+ */
+int readMediaTypes(const char *filename) {
+
+    FILE *typeStream = fopen(filename, "r");
+	if (typeStream == NULL) {
+		return 0;
+	}
+
+	// If there is no Properties instance, this method creates one.
+	// If there is a Properties instance, this method replaces it with one created from this file.
+	if (props != NULL) {
+		deleteProperties(props);
+	}
+	props = newProperties();
+
+	// create a reader to read file line by line
+    char *line = NULL;
+    size_t len = 0;
+    int nprops = 0;
+
+    while (getline(&line, &len, typeStream) != -1) {
+    	char *type = strtok(line, " "); // split line by spaces
+    	if (strcmp(type, "#") == 0) { // ignore comment
+    		continue;
+    	}
+
+    	char *token = type;
+ 	    while (token != NULL) {
+ 	    	token = strtok(NULL, " ");
+ 	    	if (token != NULL) {
+ 	    		// put extension (key) and type (value) into property
+ 	    		putProperty(props, token, type);
+ 	    		nprops++;
+ 	    	}
+ 	    }
+    }
+    fclose(typeStream);
+    return nprops;
+}
+
 /**
  * Return a media type for a given filename.
  *
@@ -46,34 +94,13 @@ char *getMediaType(const char *filename, char *mediaType)
     // lower-case extension
     strlower(ext, ext);
 
-    const char *mtstr;
+    // use global Properties instance to get the media type
+    // if the file extension is not registered, return the default media type
+//    /*const */char *mtstr = DEFAULT_MEDIA_TYPE;
 
-    // hash on first char?
-    switch (*ext) {
-    case 'c':
-        if (strcmp(ext, "css") == 0) { mtstr = "text/css"; }
-        break;
-    case 'g':
-        if (strcmp(ext, "gif") == 0) { mtstr = "image/gif"; }
-        break;
-    case 'h':
-        if (strcmp(ext, "html") == 0 || strcmp(ext, "htm") == 0) { mtstr = "text/html"; }
-        break;
-    case 'j':
-    	if (strcmp(ext, "jpeg") == 0 || strcmp(ext, "jpg") == 0) { mtstr = "image/jpg"; }
-    	else if (strcmp(ext, "js") == 0) { mtstr = "application/javascript"; }
-    	else if (strcmp(ext, "json") == 0) { mtstr = "application/json"; }
-    	break;
-    case 'p':
-        if (strcmp(ext, "png") == 0) { mtstr = "image/png"; }
-        break;
-    case 't':
-    	if (strcmp(ext, "txt") == 0) { mtstr = "text/plain"; }
-    	break;
-    default:
-    	mtstr = DEFAULT_MEDIA_TYPE;
+    if (findProperty(props, 0, ext, mediaType) == SIZE_MAX) {
+    	strcpy(mediaType, DEFAULT_MEDIA_TYPE);
     }
 
-    strcpy(mediaType, mtstr);
     return mediaType;
 }

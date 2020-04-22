@@ -117,7 +117,16 @@ static bool process_config(const char* configFileName) {
 		static char serverProtocolProp[MAXBUF] = "HTTP/1.1";
 		server.server_protocol = serverProtocolProp;
 		findProperty(httpConfig, 0, "ServerProtocol", serverProtocolProp);
-
+		
+		// set content base property if specified or use default "mime.types"
+		static char contentTypesProp[MAXBUF] = "mime.types";
+		if (findProperty(httpConfig, 0, "ContentTypes", contentTypesProp) != SIZE_MAX) {
+			if (readMediaTypes(contentTypesProp) == 0) {
+				status = false;
+				break;
+			}
+		}
+		
 	} while(false);
 
 	deleteProperties(httpConfig);

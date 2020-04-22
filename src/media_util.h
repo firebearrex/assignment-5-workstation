@@ -11,6 +11,14 @@
 #define MEDIA_UTIL_H_
 
 /**
+ * Read the file extensions and media types into global Properties instance
+ *
+ * @param filename the name of the "mime.types" file
+ * @return the number of entries in Properties
+ */
+int readMediaTypes(const char *filename);
+
+/**
  * Return a media type for a given filename.
  *
  * @param filename the name of the file
