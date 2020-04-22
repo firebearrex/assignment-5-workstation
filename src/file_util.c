@@ -16,6 +16,7 @@
 #include <dirent.h>
 #include <time.h>
 #include <http_util.h>
+#include "time_util.h"
 
 /**
  * This function creates a temporary stream for this string.
@@ -195,20 +196,25 @@ int timespec2str(char *buf, uint len, struct timespec *ts) {
  * @param path the path to the directory
  * @return FILE pointer to the file listing contents of the directory
  */
-void get_dir_listings(const char *uri, const char *path, const char *filename) {
+FILE *get_dir_listings(const char *uri, const char *path) {
     char filePath[MAXPATHLEN];
-    char fileInDir[MAXPATHLEN];
+    const char *fileInDir[MAXBUF];
     char buf[MAXBSIZE];
     long bufLen;
     char timeStr[TIME_FMT];
 
-    // Create file filename
-    makeFilePath(path, filename, filePath);
+    FILE *dirPage = tmpfile();
+    if (dirPage == NULL) {
+        return NULL;
+    }
 
-    // open a stream for filePath to write
-    FILE *listDirStream = fopen(filePath, "w");
+//    // Create file filename
+//    makeFilePath(path, filename, filePath);
 
-    startHtmlPage(uri, listDirStream);
+//    // open a stream for filePath to write
+//    FILE *listDirStream = fopen(filePath, "w");
+
+    startHtmlPage(uri, dirPage);
     //fprintf(listDirStream, "Name\tLast modified\tSize\tFile version\n");
 
     // Collect data
@@ -222,32 +228,50 @@ void get_dir_listings(const char *uri, const char *path, const char *filename) {
     {
         while ((dirEntry = readdir(dir)) != NULL)
         {
-            if ((strcmp(dirEntry->d_name, filename) == 0)
-             || (strcmp(dirEntry->d_name, ".") == 0)){
+            if ((strcmp(dirEntry->d_name, "..") == 0)
+             || (strcmp(dirEntry->d_name, ".") == 0)
+             || (strcmp(uri, "/") == 0)){
                 continue;
             }
 
-            memset(fileInDir, 0, sizeof(fileInDir));
-            memset(timeStr, 0, sizeof(timeStr));
-            memset(buf, 0, sizeof(buf));
-
-            strcpy(fileInDir, path);
-            strcat(fileInDir, "/");
-            strcat(fileInDir, dirEntry->d_name);
-
-            if (stat(fileInDir, &sb) == -1) {
-                fprintf(stderr, "Can't stat %s: %s\n", dirEntry->d_name,
-                        strerror(errno));
-
-                printf("unknown");
+            if (strcmp(dirEntry->d_name, "..") == 0) {
+                *fileInDir = "Parent Dir";
             } else {
-                timespec2str(timeStr, sizeof(timeStr), &sb.st_mtimespec);
-                makeHtmlEntry(listDirStream, dirEntry->d_name, timeStr, sb.st_size, sb.st_mode);
-                //fprintf(listDirStream, "%s\t%s\t%lld\t%d\n", dirEntry->d_name, timeStr, sb.st_size, sb.st_mode);
+                *fileInDir = dirEntry->d_name;
             }
+//
+            makeFilePath(path, dirEntry->d_name, filePath);
+//
+            stat(filePath, &sb);
+//
+            milliTimeToShortHM_Date_Time(sb.st_mtimespec.tv_sec, timeStr);
+
+            makeHtmlEntry(dirPage, *fileInDir, timeStr, sb.st_size, sb.st_mode);
+
+//            memset(fileInDir, 0, sizeof(fileInDir));
+//            memset(timeStr, 0, sizeof(timeStr));
+//            memset(buf, 0, sizeof(buf));
+//
+//            strcpy(fileInDir, path);
+//            strcat(fileInDir, "/");
+//            strcat(fileInDir, dirEntry->d_name);
+//
+//            if (stat(fileInDir, &sb) == -1) {
+//                fprintf(stderr, "Can't stat %s: %s\n", dirEntry->d_name,
+//                        strerror(errno));
+//
+//                printf("unknown");
+//            } else {
+//                timespec2str(timeStr, sizeof(timeStr), &sb.st_mtimespec);
+//                makeHtmlEntry(dirPage, dirEntry->d_name, timeStr, sb.st_size, sb.st_mode);
+//                //fprintf(listDirStream, "%s\t%s\t%lld\t%d\n", dirEntry->d_name, timeStr, sb.st_size, sb.st_mode);
+            endHtmlPage(dirPage);
         }
-        endHtmlPage(listDirStream);
-        closedir(dir);
-        fclose(listDirStream);
     }
+
+    closedir(dir);
+    fflush(dirPage);
+    rewind(dirPage);
+    return dirPage;
 }
+

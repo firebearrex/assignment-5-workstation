@@ -6,8 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../assignment-5-threadpool-workstation/src/thpool.h
-
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/file_util.h
 stdio.h
 -
@@ -16,72 +14,48 @@ stdlib.h
 sys/stat.h
 -
 
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.c
+http_methods.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.h
-stdio.h
+stdbool.h
 -
-properties.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
-
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_request.c
 stdlib.h
 -
-stdio.h
+stddef.h
 -
 string.h
 -
 time.h
 -
-unistd.h
+sys/stat.h
 -
-http_methods.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.h
-http_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_util.h
-string_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/string_util.h
-time_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/time_util.h
-http_server.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_server.h
-
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_request.h
-
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_server.c
-stdbool.h
--
-netdb.h
--
-stdio.h
--
-stdlib.h
--
-string.h
+sys/param.h
 -
 unistd.h
 -
-arpa/inet.h
+dirent.h
 -
-http_methods.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.h
-time_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/time_util.h
-http_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_util.h
-http_request.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_request.h
-network_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/network_util.h
-properties.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
 http_server.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_server.h
-thpool.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/thpool.h
+http_util.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_util.h
+time_util.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/time_util.h
 media_util.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/media_util.h
+properties.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
+string_util.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/string_util.h
 file_util.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/file_util.h
 
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.h
+stdio.h
+-
+properties.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
+
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_server.h
 stdbool.h
 -
@@ -93,8 +67,6 @@ properties.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
 
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/media_util.h
-
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/network_util.h
 
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
 stdbool.h

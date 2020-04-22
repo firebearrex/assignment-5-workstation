@@ -9,6 +9,7 @@ CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/file_util.c
 CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/file_util.h
 CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/http_server.h
 CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/properties.h
+CMakeFiles/assignment_5_workstation.dir/src/file_util.c.o: ../src/time_util.h
 
 CMakeFiles/assignment_5_workstation.dir/src/http_methods.c.o: ../src/file_util.h
 CMakeFiles/assignment_5_workstation.dir/src/http_methods.c.o: ../src/http_methods.c
