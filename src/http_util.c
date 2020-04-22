@@ -197,7 +197,7 @@ void startHtmlPage(const char *uri, FILE* fname) {
                        "  <tr>\n"
                        "    <td colspan=\"5\"><hr></td>\n"
                        "  </tr>\n\n");
-    fprintf(fname, htmlData);
+    fprintf(fname, "%s", htmlData);
 }
 
 void tostring(char str[], int num)
@@ -276,7 +276,7 @@ void makeHtmlEntry(FILE* fname, const char *name, const char *mtime, off_t size,
     strcat(htmlData, "</td>\n"
                        "    <td></td>\n"
                        "  </tr>");
-    fprintf(fname, htmlData);
+    fprintf(fname, "%s", htmlData);
 }
 
 /**
@@ -292,5 +292,5 @@ void endHtmlPage(FILE* fname) {
                      "  </tr>\n"
                      "</body>\n"
                      "</html>");
-    fprintf(fname, htmlData);
+    fprintf(fname, "%s", htmlData);
 }

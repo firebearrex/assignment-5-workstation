@@ -54,7 +54,7 @@ static void do_get_or_head(FILE *stream, const char *uri, Properties *requestHea
 	if (S_ISDIR(sb.st_mode) && strendswith(filePath, "/")) {
 //		// not allowed for this method
 //		sendErrorResponse(stream, 405, "Method Not Allowed", responseHeaders);
-		contentStream = get_dir_listings(uri, filePath);
+		contentStream = dir_listings(uri, filePath);
         if (contentStream == NULL) {
             sendErrorResponse(stream, 405, "Method Not Allowed", responseHeaders);
             return;

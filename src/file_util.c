@@ -196,12 +196,12 @@ int timespec2str(char *buf, uint len, struct timespec *ts) {
  * @param path the path to the directory
  * @return FILE pointer to the file listing contents of the directory
  */
-FILE *get_dir_listings(const char *uri, const char *path) {
+static FILE *dir_listings(const char *uri, const char *path) {
     char filePath[MAXPATHLEN];
     const char *fileInDir[MAXBUF];
-    char buf[MAXBSIZE];
-    long bufLen;
-    char timeStr[TIME_FMT];
+//    char buf[MAXBSIZE];
+//    long bufLen;
+    char timeStr[MAXBUF];
 
     FILE *dirPage = tmpfile();
     if (dirPage == NULL) {
@@ -218,19 +218,19 @@ FILE *get_dir_listings(const char *uri, const char *path) {
     //fprintf(listDirStream, "Name\tLast modified\tSize\tFile version\n");
 
     // Collect data
-    DIR *dir;
+    DIR *dir = opendir(path);
     struct stat sb;
     struct dirent *dirEntry;
 
-    dir = opendir(path);
+//    dir = opendir(path);
 
     if (dir)
     {
         while ((dirEntry = readdir(dir)) != NULL)
         {
-            if ((strcmp(dirEntry->d_name, "..") == 0)
-             || (strcmp(dirEntry->d_name, ".") == 0)
-             || (strcmp(uri, "/") == 0)){
+            if ((strcmp(dirEntry->d_name, ".") == 0)
+             || ((strcmp(dirEntry->d_name, "..") == 0)
+             && (strcmp(uri, "/") == 0))){
                 continue;
             }
 
@@ -244,7 +244,7 @@ FILE *get_dir_listings(const char *uri, const char *path) {
 //
             stat(filePath, &sb);
 //
-            milliTimeToShortHM_Date_Time(sb.st_mtimespec.tv_sec, timeStr);
+            milliTimeToShortHM_Date_Time(sb.st_mtim.tv_sec, timeStr);
 
             makeHtmlEntry(dirPage, *fileInDir, timeStr, sb.st_size, sb.st_mode);
 

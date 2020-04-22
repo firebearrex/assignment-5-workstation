@@ -162,7 +162,7 @@ int main(int argc, char* argv[argc]) {
 		fprintf(stderr, "HttpServer running on port %d\n", server.server_port);
 	}
 
-    threadpool thpool = thpool_init(4);
+    threadpool thpool = thpool_init(16);
 
 	while (true) {
         // accept client connection

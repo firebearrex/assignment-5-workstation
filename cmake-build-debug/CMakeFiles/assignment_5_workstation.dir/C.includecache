@@ -6,76 +6,50 @@
 
 #IncludeRegexTransform: 
 
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/file_util.h
-stdio.h
--
-stdlib.h
--
-sys/stat.h
--
+../src/http_util.h
+properties.h
+../src/properties.h
 
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.c
-http_methods.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.h
-stdbool.h
--
-stdlib.h
--
-stddef.h
--
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/file_util.c
 string.h
 -
-time.h
+errno.h
 -
-sys/stat.h
--
-sys/param.h
--
-unistd.h
--
-dirent.h
+stdbool.h
 -
 http_server.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_server.h
-http_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_util.h
-time_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/time_util.h
-media_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/media_util.h
-properties.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
-string_util.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/string_util.h
 file_util.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/file_util.h
+sys/param.h
+-
+dirent.h
+-
+time.h
+-
+http_util.h
+-
+time_util.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/time_util.h
 
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_methods.h
+/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/file_util.h
 stdio.h
 -
-properties.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
+stdlib.h
+-
+sys/stat.h
+-
 
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_server.h
 stdbool.h
 -
 properties.h
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
-
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/http_util.h
-properties.h
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
-
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/media_util.h
 
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/properties.h
 stdbool.h
 -
 stdint.h
--
-
-/Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/string_util.h
-stdbool.h
 -
 
 /Users/rex/Documents/GitHub/firebearrex private/assignment-5-workstation/src/time_util.h

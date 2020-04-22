@@ -107,7 +107,7 @@ int mkdirs(const char *path, mode_t mode);
  * @param path the path to the directory
  * @return FILE pointer to the file listing contents of the directory
  */
-FILE *get_dir_listings(const char *uri, const char *path);
+static FILE *dir_listings(const char *uri, const char *path);
 
 int timespec2str(char *buf, unsigned int len, struct timespec *ts);
 #endif /* FILE_UTIL_H_ */
